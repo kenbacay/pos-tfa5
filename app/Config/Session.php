@@ -54,11 +54,11 @@ class Session extends BaseConfig
      * WARNING: Only absolute paths are supported!
      *
      * For the 'database' driver, it's a table name.
-     * Please read up the manual for the format with other session drivers.
+     * Please read the manual for the format with other session drivers.
      *
      * IMPORTANT: You are REQUIRED to set a valid save path!
      */
-    public string $savePath = 'C:/xampp/tmp/ci_sessions';
+    public string $savePath = WRITEPATH . 'session';
 
     /**
      * --------------------------------------------------------------------------
@@ -68,7 +68,7 @@ class Session extends BaseConfig
      * Whether to match the user's IP address when reading the session data.
      *
      * WARNING: If you're using the database driver, don't forget to update
-     *          your session table's PRIMARY KEY when changing this setting.
+     *          the session table's PRIMARY KEY when changing this setting.
      */
     public bool $matchIP = false;
 
@@ -125,4 +125,21 @@ class Session extends BaseConfig
      * seconds.
      */
     public int $lockMaxRetries = 300;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Environment-specific Session Path
+     * --------------------------------------------------------------------------
+     *
+     * Render uses Linux, so sessions are stored in /tmp.
+     * XAMPP continues using writable/session locally.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (DIRECTORY_SEPARATOR === '/') {
+            $this->savePath = '/tmp/ci_sessions';
+        }
+    }
 }
