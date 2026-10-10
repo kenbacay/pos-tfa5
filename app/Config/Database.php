@@ -32,7 +32,7 @@ class Database extends Config
         'database'     => '',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
-        'pConnect'     => false,
+        'pConnect'    => false,
         'DBDebug'      => true,
         'charset'      => 'utf8mb4',
         'DBCollat'     => 'utf8mb4_general_ci',
@@ -87,7 +87,7 @@ class Database extends Config
     //        'schema'     => 'public',
     //        'DBDriver'   => 'Postgre',
     //        'DBPrefix'   => '',
-    //        'pConnect'  => false,
+    //        'pConnect'   => false,
     //        'DBDebug'    => true,
     //        'charset'    => 'utf8',
     //        'swapPre'    => '',
@@ -194,30 +194,11 @@ class Database extends Config
     {
         parent::__construct();
 
-        $this->default['hostname'] = env(
-            'database.default.hostname',
-            'localhost'
-        );
-
-        $this->default['username'] = env(
-            'database.default.username',
-            ''
-        );
-
-        $this->default['password'] = env(
-            'database.default.password',
-            ''
-        );
-
-        $this->default['database'] = env(
-            'database.default.database',
-            ''
-        );
-
-        $this->default['port'] = (int) env(
-            'database.default.port',
-            3306
-        );
+        $this->default['hostname'] = env('DB_HOST', 'localhost');
+        $this->default['username'] = env('DB_USER', '');
+        $this->default['password'] = env('DB_PASSWORD', '');
+        $this->default['database'] = env('DB_NAME', '');
+        $this->default['port']     = (int) env('DB_PORT', 3306);
 
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
