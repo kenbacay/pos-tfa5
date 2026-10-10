@@ -1,7 +1,11 @@
 FROM php:8.2-apache
 
-RUN a2enmod rewrite \
-    && docker-php-ext-install mysqli pdo pdo_mysql
+RUN apt-get update \
+    && apt-get install -y libicu-dev \
+    && docker-php-ext-install intl mysqli pdo pdo_mysql \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN a2enmod rewrite
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
